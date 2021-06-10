@@ -1,0 +1,95 @@
+{% extends 'compradores/base_compradores.html' %}
+{% load static %}
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+    {% include 'compradores/alerts.html' %}
+    <div class="page-header">
+        <div class="row">
+            <h1 class="col-xs-12 col-sm-4 text-center text-left-sm">
+                <i class="fa fa-edit page-header-icon"></i>
+                &nbsp;&nbsp;Perfil Vendedor
+            </h1>
+        </div>
+    </div>
+    <div class="profile-full-name">
+        <span class="text-semibold">
+            <i class="fa fa-edit page-header-icon"></i>&nbsp;Datos Vendedor
+        </span>
+    </div>
+    <div class="profile-row">
+        <div class="left-col">
+            <div class="profile-block">
+                <div class="panel profile-photo">
+                    <img src="{{ foto_usuario.url }}" id="img_usuario" alt="Foto Usuario">
+                </div>
+            </div>
+        </div>
+        <div class="right-col">
+            <hr class="profile-content-hr no-grid-gutter-h">
+            <div class="profile-content">
+                <div class="panel">
+                    <br><br>
+                    <form id="form_vendedor">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        {% for field in form %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                <label for="jq-validation-url" class="col-sm-3 control-label">
+                                    <strong>{{ field.label }}</strong>
+                                </label>
+                                <div class="col-sm-9">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <br>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <a href="{% url 'compradores:listar_vehiculos' %}">
+                                    <button type="button" class="btn btn-danger">Salir</button>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        init.push(function ()
+        {
+            $('body').addClass("page-profile");
+            $('#buscar_vehiculo').addClass("active");
+         });
+
+        window.PixelAdmin.start(init);
+
+
+        $('#form_vendedor').find("input[type='text'], input[type='number'], input[type='file'], select, textarea").each(function (index, element)
+        {
+            $(element).prop('readonly', true);
+            $(element).prop('disabled', true);
+        });
+
+        $('#form_vendedor').find("select").each(function (index, element)
+        {
+            $(element).attr('style', 'pointer-events: none;');
+        });
+    </script>
+
+    {% block scripts_crud %}
+    {% endblock %}
+{% endblock %}
+
+
+
+
+
+

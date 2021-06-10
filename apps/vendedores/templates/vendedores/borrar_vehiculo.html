@@ -1,0 +1,24 @@
+{% extends 'vendedores/base_crud_vehiculo.html' %}
+
+{% block titulo_formulario_vehiculo %}
+    <i class="fa fa-eraser page-header-icon"></i>&nbsp;Borrar Vehículo
+{% endblock %}
+
+{% block boton_accion_vehiculo %}
+    <button type="submit" class="btn btn-primary">Borrar</button>
+{% endblock %}
+
+{% block scripts_crud %}
+    <script>
+        $('#form_vehiculo').find("input[type='text'], input[type='number'], input[type='file'], select, textarea").each(function (index, element)
+        {
+            $(element).prop('readonly', true);
+            $(element).prop('disabled', true);
+        });
+
+        $('#form_vehiculo').find("select").each(function (index, element)
+        {
+            $(element).attr('style', 'pointer-events: none;');
+        });
+    </script>
+{% endblock %}

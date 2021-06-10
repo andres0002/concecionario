@@ -1,0 +1,80 @@
+{% extends 'vendedores/base_vendedor.html' %}
+{% load static %}
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="row">
+            <h1 class="col-xs-12 col-sm-4 text-center text-left-sm">
+                <i class="fa fa-edit page-header-icon"></i>
+                &nbsp;&nbsp;Administrar Vehículos
+            </h1>
+        </div>
+    </div>
+    <div class="profile-full-name">
+        <span class="text-semibold">
+            {% block titulo_formulario_vehiculo %}
+            {% endblock %}
+        </span>
+    </div>
+    <div class="profile-row">
+        <div class="left-col">
+            <div class="profile-block">
+                <div class="panel profile-photo">
+                {% if foto_vehiculo.url %}
+                    <img src="{{ foto_vehiculo.url }}" id="img_vehiculo" alt="Foto Vehiculo">
+                {% else %}
+                    <img src="{% static 'images/vehiculo.png' %}" id="img_vehiculo" alt="Foto Vehiculo">
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="right-col">
+            <hr class="profile-content-hr no-grid-gutter-h">
+            <div class="profile-content">
+                <div class="panel">
+                    <br><br>
+                    <form method="post" id="form_vehiculo" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        {% include 'vendedores/form_vehiculo.html' %}
+                        <br>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                {% block boton_accion_vehiculo %}
+                                {% endblock %}
+                                <a href="{% url 'vendedores:listar_vehiculos' %}">
+                                    <button type="button" class="btn btn-danger">Salir</button>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        init.push(function ()
+        {
+            $('body').addClass("page-profile");
+            $('#item_vehiculos').addClass("active");
+            $('#id_vehfoto').pixelFileInput({ placeholder: 'Seleccione una imagen para el vehiculo'});
+        });
+
+        window.PixelAdmin.start(init);
+    </script>
+
+    {% block scripts_crud %}
+    {% endblock %}
+{% endblock %}
+
+
+
+
+
+

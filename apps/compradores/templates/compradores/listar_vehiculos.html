@@ -1,0 +1,77 @@
+{% extends 'compradores/base_compradores.html' %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+    {% include 'compradores/alerts.html' %}
+    <div class="page-header">
+        <div class="row">
+            <!-- Page header, center on small screens -->
+            <h1 class="col-xs-12 col-sm-4 text-center text-left-sm">
+                <i class="fa fa-edit page-header-icon"></i>&nbsp;&nbsp;Consulta de Vehiculos
+            </h1>
+            <div class="col-xs-12 col-sm-8">
+                <div class="row">
+                    <hr class="visible-xs no-grid-gutter-h">
+                    <!-- Margin -->
+                    <div class="visible-xs clearfix form-group-margin"></div>
+                    <!-- Search field -->
+                </div>
+            </div>
+        </div>
+    </div> <!-- / .page-header -->
+    <!-- / Javascript -->
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-primary">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Placa</th>
+                            <th>Modelo</th>
+                            <th>Marca</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Vendedor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for vehiculo in vehiculos %}
+                        <tr class="odd gradeX">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ vehiculo.vehplaca }}</td>
+                            <td>{{ vehiculo.vehmodelo }}</td>
+                            <td>{{ vehiculo.vehmarca }}</td>
+                            <td>{{ vehiculo.catid.catipo }}</td>
+                            <td>{{ vehiculo.vehprecio }}</td>
+                            <td>
+                                <a href="{% url 'compradores:visualizar_perfil_vendedor' vehiculo.datid.usuid.pk %}">{{ vehiculo.datid.datnombre }}&nbsp;{{ vehiculo.datid.datapellido }}</a>
+                            </td>
+                            <td>
+                                <div class="btn-group" >
+{#                                    <a href="{% url 'compradores:visualizar_vehiculo' vehiculo.vehplaca %}" class="btn btn-primary">Visualizar</a>#}
+                                    <a href="{% url  'compradores:visualizar_vehiculo' vehiculo.vehplaca %}" class="btn btn-primary">Visualizar</a>
+                                </div>&nbsp;
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        init.push(function ()
+        {
+            $('#jq-datatables-example').dataTable();
+            $('#jq-datatables-example_wrapper .table-caption').text('Listado de Vehículos');
+            $('#jq-datatables-example_wrapper .dataTables_filter input').attr('placeholder', 'Buscar...');
+        });
+    </script>
+{% endblock %}
